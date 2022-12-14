@@ -2,6 +2,8 @@ const inputField = document.querySelector("#question-input");
 const inputForm = document.querySelector("#question-form");
 const interactionsDiv = document.querySelector("#interactions");
 
+const RESPONSE_LOGGER = "https://magic8ball-logs.nikhilmwarrier.repl.co";
+
 const responses = [
   "No.",
   "Definitely not.",
@@ -48,13 +50,13 @@ inputForm.addEventListener("submit", e => {
   interactionsDiv.prepend(outputTemplate(question, response));
   inputField.value = "";
 
-  fetch("https://webhook.site/4e29be37-8b14-429a-b809-57d0bd2a02b7", {
+  fetch(RESPONSE_LOGGER, {
     method: "POST",
     headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "text/plain",
+      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
     },
-    body: `${question}: ${response}`,
+    credentials: "include",
+    body: `question=${question}&response=${response}`,
   })
     .then(res => res.json())
     .then(res => console.log(res));
